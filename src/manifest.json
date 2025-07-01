@@ -1,0 +1,27 @@
+{
+  "manifest_version": 3,
+  "name": "My Chrome Extension",
+  "version": "1.0",
+  "permissions": [
+    "contextMenus",
+    "sidePanel",
+    "activeTab",
+    "scripting"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://*.google.com/*"],
+      "js": ["content-google.js"]
+    },
+    {
+      "matches": ["*://*.microsoft.com/*"],
+      "js": ["content-microsoft.js"]
+    }
+  ],
+  "side_panel": {
+    "default_path": "sidepanel1.html"
+  }
+}
