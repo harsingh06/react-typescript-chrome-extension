@@ -1,6 +1,7 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const packageJson = require('./package.json');
 
 module.exports = {
   entry: {
@@ -43,7 +44,17 @@ module.exports = {
     }),
     new CopyWebpackPlugin({
       patterns: [
-        { from: 'src/manifest.json', to: 'manifest.json' },
+        {
+          from: 'src/manifest.json',
+          to: 'manifest.json',
+          transform(content, path) {
+            const manifest = JSON.parse(content.toString());
+            manifest.name = packageJson.name;
+            manifest.description = packageJson.description;
+            manifest.version = packageJson.version;
+            return JSON.stringify(manifest, null, 2);
+          },
+        },
       ],
     }),
   ],
